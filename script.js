@@ -3,68 +3,188 @@ let loop = true,
   clientes = [],
   passagens = [],
   voos = [],
-  pacote = [];
+  pacotes = [];
 
 class Cliente {
   Nome;
-  Cpf;
-  DataNascimento;
+  #Cpf;
+  #DataNascimento;
   constructor(nome, cpf, dataNascimento) {
-    this.Nome = nome;
-    this.Cpf = cpf;
-    this.DataNascimento = dataNascimento;
+    this.setNome(nome);
+    this.setCpf(cpf);
+    this.setDataNascimento(dataNascimento);
+  }
+  setNome(nome) {
+    if (nome.length > 50) {
+      alert("Nome Muito Grande, Cadastre um Nome com Menos de 50 Caracteres");
+    } else {
+      this.Nome = nome;
+    }
+  }
+  setCpf(cpf) {
+    if (cpf.length > 11) {
+      alert("Cpf invalidO");
+    } else {
+      this.#Cpf = cpf;
+    }
+  }
+  setDataNascimento(dataNascimento) {
+    this.#DataNascimento = dataNascimento;
+  }
+  exibirNome() {
+    return alert(this.Nome);
+  }
+  exibirCpf() {
+    return alert(this.#Cpf);
+  }
+  exibirData() {
+    return alert(this.#DataNascimento);
   }
 }
 class PacoteViagem {
-  Titular;
-  Passagem;
-  ValorTotal;
+  #Titular;
+  #Passagem;
+  #ValorTotal;
   constructor(titular, passagem, valorTotal) {
-    this.titular = titular;
-    this.Passagem = passagem;
-    this.ValorTotal = valorTotal;
+    this.setTitular(titular);
+    this.setPassagem(passagem);
+    this.setValorTotal(valorTotal);
+  }
+  setTitular(titular) {
+    this.#Titular = titular;
+  }
+  setPassagem(passagem) {
+    this.#Passagem = passagem;
+  }
+  setValorTotal(valorTotal) {
+    this.#ValorTotal = valorTotal;
+  }
+  exibirTitular() {
+    return alert(this.#Titular);
+  }
+  exibirPassagem() {
+    return alert(this.#Passagem);
+  }
+  exibirValorTotal() {
+    return alert(this.#ValorTotal);
   }
 }
 class Voo {
   Empresa;
-  Numero;
-  Data;
-  Horario;
-  Partida;
-  Destino;
+  #Numero;
+  #Data;
+  #Horario;
+  #Partida;
+  #Destino;
   constructor(empresa, numero, data, horario, partida, destino) {
+    this.setEmpresa(empresa);
+    this.setNumero(numero);
+    this.setData(data);
+    this.setHorario(horario);
+    this.setPartida(partida);
+    this.setDestino(destino);
+  }
+  setEmpresa(empresa) {
     this.Empresa = empresa;
-    this.Numero = numero;
-    this.Data = data;
-    this.Horario = horario;
-    this.Partida = partida;
-    this.Destino = destino;
+  }
+  setNumero(numero) {
+    this.#Numero = numero;
+  }
+  setData(data) {
+    this.#Data = data;
+  }
+  setHorario(horario) {
+    this.#Horario = horario;
+  }
+  setPartida(partida) {
+    this.#Partida = partida;
+  }
+  setDestino(destino) {
+    this.#Destino = destino;
+  }
+  exibirEmpresa() {
+    return alert(this.Empresa);
+  }
+  exibirNumero() {
+    return alert(this.#Numero);
+  }
+  exibirData() {
+    return alert(this.#Data);
+  }
+  exibirHorario() {
+    return alert(this.#Horario);
+  }
+  exibirPartida() {
+    return alert(this.#Partida);
+  }
+  exibirDestino() {
+    return alert(this.#Destino);
   }
 }
 class Passagem {
-  Assento;
-  PrimeiraClasse;
-  ValorTotal;
+  #Assento;
+  #PrimeiraClasse;
+  #ValorTotal;
   Passageiro;
-  Voo;
+  #Voo;
   constructor(assento, primeiraClasse, valorTotal, passageiro, voo) {
-    this.Assento = assento;
-    this.PrimeiraClasse = primeiraClasse;
-    this.ValorTotal = valorTotal;
-    this.Passageiro = passageiro;
-    this.Voo = voo;
+    this.setAssento(assento);
+    this.setPrimeiraClasse(primeiraClasse);
+    this.setValorTotal(valorTotal);
+    this.setPassageiro(passageiro);
+    this.setVoo(voo);
   }
   CalcularValor() {
-    if (this.PrimeiraClasse == true) {
-      return (this.ValorTotal *= 1.5);
+    if (this.#PrimeiraClasse == true) {
+      return (this.#ValorTotal *= 1.5);
     } else {
-      return (this.ValorTotal = this.ValorTotal);
+      return this.#ValorTotal;
     }
   }
   ExibirResumo(valorTotal) {
     alert(
-      `Passagem em nome:${this.Passageiro}\nAssento: ${this.Assento} \nValor Total: ${valorTotal}`
+      `Passagem em nome:${this.Passageiro}\nAssento: ${
+        this.#Assento
+      } \nValor Total: ${valorTotal}`
     );
+  }
+  setAssento(assento) {
+    this.#Assento = assento;
+  }
+  setPrimeiraClasse(primeiraClasse) {
+    if (primeiraClasse == true || primeiraClasse == false) {
+      this.#PrimeiraClasse = primeiraClasse;
+    } else {
+      alert("Digite 1 ou 2 Para Escolher a primeiraClasse");
+    }
+  }
+  setValorTotal(valorTotal) {
+    if (valorTotal >= 0) {
+      this.#ValorTotal = valorTotal;
+    } else {
+      alert("Digite um Valor maior que 0");
+    }
+  }
+  setPassageiro(passageiro) {
+    this.Passageiro = passageiro;
+  }
+  setVoo(voo) {
+    this.#Voo = voo;
+  }
+  exibirAssento() {
+    return alert(this.#Assento);
+  }
+  exibirPrimeiraClasse() {
+    return alert(this.#PrimeiraClasse);
+  }
+  exibirValorTotal() {
+    return alert(this.#ValorTotal);
+  }
+  exibirPassageiro() {
+    return alert(this.Passageiro);
+  }
+  exibirVoo() {
+    return alert(this.#Voo);
   }
 }
 
@@ -119,7 +239,7 @@ function registrarCliente() {
   let Nome = prompt("Qual o Nome do Cliente:"),
     Cpf = Number(prompt("Cpf do Cliente:")),
     DataNascimento = prompt("Data de Nascimento do Cliente:");
-  if (Nome == "" || Cpf == "" || DataNascimento == "") {
+  if (Nome == "" || Cpf == "" || Cpf.length < 11 || DataNascimento == "") {
     alert(textAlert);
   } else {
     let novoCliente = new Cliente(Nome, Cpf, DataNascimento);
@@ -183,7 +303,6 @@ function registrarPassagem() {
               voo
             );
             passagens.push(novaPassagem);
-            console.log(novaPassagem);
             alert("Passagem Criada com Sucesso");
           } else {
             alert("Nome da Empresa invalida, Cadastre a Empresa Primeiro");
@@ -204,7 +323,7 @@ function registrandoPacoteDeViagem() {
           let passagem = array;
           valorTotal = array.CalcularValor();
           const novoPacote = new PacoteViagem(titular, passagem, valorTotal);
-          pacote.push(novoPacote);
+          pacotes.push(novoPacote);
           array.ExibirResumo(valorTotal);
         } else {
           alert("Titular não tem nenhuma passagem em seu Nome:");
