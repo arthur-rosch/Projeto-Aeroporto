@@ -1,12 +1,14 @@
 let loop = true,
   textAlert = "Valor Invalido, Digite Valores Validos",
   clientes = [],
-  passagens = [],
+  passagensIda = [],
+  passagensVolta = [],
   voos = [],
-  pacotes = [];
+  pacotes = [],
+  total = 0;
 
 class Cliente {
-  Nome;
+  #Nome;
   #Cpf;
   #DataNascimento;
   constructor(nome, cpf, dataNascimento) {
@@ -15,62 +17,62 @@ class Cliente {
     this.setDataNascimento(dataNascimento);
   }
   setNome(nome) {
-    if (nome.length > 50) {
-      alert("Nome Muito Grande, Cadastre um Nome com Menos de 50 Caracteres");
-    } else {
-      this.Nome = nome;
-    }
+    this.#Nome = nome;
   }
   setCpf(cpf) {
-    if (cpf.length > 11) {
-      alert("Cpf invalidO");
-    } else {
-      this.#Cpf = cpf;
-    }
+    this.#Cpf = cpf;
   }
   setDataNascimento(dataNascimento) {
     this.#DataNascimento = dataNascimento;
   }
-  exibirNome() {
-    return alert(this.Nome);
+  getNome() {
+    return this.#Nome;
   }
-  exibirCpf() {
-    return alert(this.#Cpf);
+  getCpf() {
+    return this.#Cpf;
   }
-  exibirData() {
-    return alert(this.#DataNascimento);
+  getData() {
+    return this.#DataNascimento;
   }
 }
 class PacoteViagem {
   #Titular;
-  #Passagem;
+  #PassagemIda;
+  #PassagemVolta;
   #ValorTotal;
-  constructor(titular, passagem, valorTotal) {
+  constructor(titular, passagemIda, passagemVolta, valorTotal) {
     this.setTitular(titular);
-    this.setPassagem(passagem);
+    this.setPassagemIda(passagemIda);
+    this.setPassagemVolta(passagemVolta);
     this.setValorTotal(valorTotal);
   }
   setTitular(titular) {
     this.#Titular = titular;
   }
-  setPassagem(passagem) {
-    this.#Passagem = passagem;
+  setPassagemIda(passagemIda) {
+    this.#PassagemIda = passagemIda;
+  }
+  setPassagemVolta(passagemVolta) {
+    this.#PassagemVolta = passagemVolta;
   }
   setValorTotal(valorTotal) {
     this.#ValorTotal = valorTotal;
   }
-  exibirTitular() {
-    return alert(this.#Titular);
+  getTitular() {
+    return this.#Titular;
   }
-  exibirPassagem() {
-    return alert(this.#Passagem);
+  getPassagemIda() {
+    return this.#PassagemIda;
   }
-  exibirValorTotal() {
-    return alert(this.#ValorTotal);
+  getPassagemVolta() {
+    return this.#PassagemVolta;
+  }
+  getValorTotal() {
+    return this.#ValorTotal;
   }
 }
 class Voo {
-  Empresa;
+  #Empresa;
   #Numero;
   #Data;
   #Horario;
@@ -85,7 +87,7 @@ class Voo {
     this.setDestino(destino);
   }
   setEmpresa(empresa) {
-    this.Empresa = empresa;
+    this.#Empresa = empresa;
   }
   setNumero(numero) {
     this.#Numero = numero;
@@ -102,30 +104,30 @@ class Voo {
   setDestino(destino) {
     this.#Destino = destino;
   }
-  exibirEmpresa() {
-    return alert(this.Empresa);
+  getEmpresa() {
+    return this.#Empresa;
   }
-  exibirNumero() {
-    return alert(this.#Numero);
+  getNumero() {
+    return this.#Numero;
   }
-  exibirData() {
-    return alert(this.#Data);
+  getData() {
+    return this.#Data;
   }
-  exibirHorario() {
-    return alert(this.#Horario);
+  getHorario() {
+    return this.#Horario;
   }
-  exibirPartida() {
-    return alert(this.#Partida);
+  getPartida() {
+    return this.#Partida;
   }
-  exibirDestino() {
-    return alert(this.#Destino);
+  getDestino() {
+    return this.#Destino;
   }
 }
 class Passagem {
   #Assento;
   #PrimeiraClasse;
   #ValorTotal;
-  Passageiro;
+  #Passageiro;
   #Voo;
   constructor(assento, primeiraClasse, valorTotal, passageiro, voo) {
     this.setAssento(assento);
@@ -141,11 +143,11 @@ class Passagem {
       return this.#ValorTotal;
     }
   }
-  ExibirResumo(valorTotal) {
+  ExibirResumo() {
     alert(
-      `Passagem em nome:${this.Passageiro}\nAssento: ${
+      `Passagem em nome:${this.#Passageiro}\nAssento: ${
         this.#Assento
-      } \nValor Total: ${valorTotal}`
+      } \nValor Total: ${this.#ValorTotal}`
     );
   }
   setAssento(assento) {
@@ -166,24 +168,24 @@ class Passagem {
     }
   }
   setPassageiro(passageiro) {
-    this.Passageiro = passageiro;
+    this.#Passageiro = passageiro;
   }
   setVoo(voo) {
     this.#Voo = voo;
   }
-  exibirAssento() {
+  getAssento() {
     return alert(this.#Assento);
   }
-  exibirPrimeiraClasse() {
+  getPrimeiraClasse() {
     return alert(this.#PrimeiraClasse);
   }
-  exibirValorTotal() {
+  getValorTotal() {
     return alert(this.#ValorTotal);
   }
-  exibirPassageiro() {
-    return alert(this.Passageiro);
+  getPassageiro() {
+    return alert(this.#Passageiro);
   }
-  exibirVoo() {
+  getVoo() {
     return alert(this.#Voo);
   }
 }
@@ -191,7 +193,7 @@ class Passagem {
 while (loop) {
   let choice = Number(
     prompt(
-      "1-Cadastrar Cliente \n2-Cadastrar Voo\n3-Criar Passagem \n4-Cria Pacote\n5-Encerar Programa"
+      "1-Cadastrar Cliente \n2-Cadastrar Voo \n3-Cria Pacote \n4-Encerar Programa"
     )
   );
   switch (choice) {
@@ -204,7 +206,7 @@ while (loop) {
     case 3:
       if (clientes.length > 0) {
         if (voos.length > 0) {
-          registrarPassagem();
+          registrandoPacoteDeViagem();
         } else {
           alert("Cadastre um VOO Primeiro!!");
         }
@@ -213,21 +215,6 @@ while (loop) {
       }
       break;
     case 4:
-      if (clientes.length > 0) {
-        if (voos.length > 0) {
-          if (passagens.length > 0) {
-            registrandoPacoteDeViagem();
-          } else {
-            alert("Crie uma Passagem Primeiro!!");
-          }
-        } else {
-          alert("Cadastre um VOO Primeiro!!");
-        }
-      } else {
-        alert("Cadastre um Cliente Primeiro!!");
-      }
-      break;
-    case 5:
       loop = false;
       break;
     default:
@@ -237,14 +224,20 @@ while (loop) {
 }
 function registrarCliente() {
   let Nome = prompt("Qual o Nome do Cliente:"),
-    Cpf = Number(prompt("Cpf do Cliente:")),
+    Cpf = prompt("Cpf do Cliente:"),
     DataNascimento = prompt("Data de Nascimento do Cliente:");
   if (Nome == "" || Cpf == "" || Cpf.length < 11 || DataNascimento == "") {
     alert(textAlert);
-  } else {
+  }
+  if (Cpf.length > 11) {
+    alert("Cpf Invalida, Passou de 11 Dígitos");
+  }
+  if (Nome.length > 50) {
+    alert("Nome muito Grande, Digite um Nome com Menos de 50 Caracteres");
+  }
+  if (Nome.length <= 50 && Cpf.length == 11) {
     let novoCliente = new Cliente(Nome, Cpf, DataNascimento);
     clientes.push(novoCliente);
-    console.log(clientes);
     alert("Cliente Cadastrado com Sucesso");
   }
 }
@@ -267,70 +260,157 @@ function registrarVoo() {
   } else {
     const novoVoo = new Voo(empresa, numero, data, horario, partida, destino);
     voos.push(novoVoo);
+    console.log(voos);
     alert("Voo Cadastrado com Sucesso");
   }
 }
-function registrarPassagem() {
-  let assento = Number(prompt("Qual Assento:")),
-    primeiraClasse = prompt("Primeira Classe: \n1-Sim \n2-Não"),
-    valorTotal = Number(prompt("Valor da Passagem:")),
-    passageiro = prompt("Nome do Passageiro:"),
-    voo = prompt("Nome da Empresa do Voo:");
+function registrarPassagemIda() {
+  for (let index = 0; index < voos.length; index++) {
+    let escolherVoo = prompt(
+      `Gostaria de ir Nesse Voo:\nEmpresa:${voos[
+        index
+      ].getEmpresa()}\nHorario:${voos[index].getHorario()}\nPartida:${voos[
+        index
+      ].getPartida()}\nDestino:${voos[index].getDestino()} 
+      \n1-Sim 2-Não`
+    );
+    if (escolherVoo == "1") {
+      index = voos.length;
 
-  if (primeiraClasse == 1) {
-    primeiraClasse = true;
-  } else {
-    primeiraClasse = false;
-  }
-  if (
-    assento == "" ||
-    primeiraClasse == "" ||
-    valorTotal == "" ||
-    passageiro == "" ||
-    voo == ""
-  ) {
-    alert(textAlert);
-  } else {
-    clientes.forEach((item) => {
-      if (item.Nome == passageiro) {
-        voos.forEach((item) => {
-          if (item.Empresa == voo) {
-            let novaPassagem = new Passagem(
+      let voo = voos[index],
+        assento = Number(prompt("Qual Assento:")),
+        primeiraClasse = prompt("Primeira Classe: \n1-Sim \n2-Não"),
+        valorTotal = Number(prompt("Valor da Passagem:")),
+        passageiro = prompt("Nome do Passageiro:");
+
+      clientes.forEach((item) => {
+        if (item.getNome() == passageiro) {
+          if (primeiraClasse == 1) {
+            primeiraClasse = true;
+          } else {
+            primeiraClasse = false;
+          }
+          if (
+            assento == "" ||
+            primeiraClasse == "" ||
+            valorTotal == "" ||
+            passageiro == ""
+          ) {
+            alert(textAlert);
+          } else {
+            let newPassaIda = new Passagem(
               assento,
               primeiraClasse,
               valorTotal,
               passageiro,
               voo
             );
-            passagens.push(novaPassagem);
+            passagensIda.push(newPassaIda);
             alert("Passagem Criada com Sucesso");
-          } else {
-            alert("Nome da Empresa invalida, Cadastre a Empresa Primeiro");
+            return newPassaIda;
           }
-        });
-      } else {
-        alert("Nome do Passageiro Invalido, Cadastre esse Passageiro Primeiro");
+        }
+      });
+    }
+  }
+}
+function registrarPassagemVolta() {
+  for (let index = 0; index < voos.length; index++) {
+    for (let index2 = 0; index2 < voos.length; index2++) {
+      if (voos[index].getDestino() == voos[index2].getPartida()) {
+        let escolherVoo = prompt(
+          `Gostaria de ir Nesse Voo: \nEmpresa:${voos[
+            index2
+          ].getEmpresa()}\nHorario:${voos[index2].getHorario()}\nPartida:${voos[
+            index2
+          ].getPartida()}\nDestino:${voos[index2].getDestino()} 
+        \n1-Sim 2-Não`
+        );
+        if (escolherVoo == "1") {
+          index = voos.length;
+          let voo = voos[index2],
+            assento = Number(prompt("Qual Assento:")),
+            primeiraClasse = prompt("Primeira Classe: \n1-Sim \n2-Não"),
+            valorTotal = Number(prompt("Valor da Passagem:")),
+            passageiro = prompt("Nome do Passageiro:");
+          clientes.forEach((item) => {
+            if (item.getNome() == passageiro) {
+              if (primeiraClasse == 1) {
+                primeiraClasse = true;
+              } else {
+                primeiraClasse = false;
+              }
+              if (
+                assento == "" ||
+                primeiraClasse == "" ||
+                valorTotal == "" ||
+                passageiro == ""
+              ) {
+                alert(textAlert);
+              } else {
+                let newPassaVolta = new Passagem(
+                  assento,
+                  primeiraClasse,
+                  valorTotal,
+                  passageiro,
+                  voo
+                );
+                passagensVolta.push(newPassaVolta);
+                alert("Passagem Criada com Sucesso");
+                return newPassaVolta;
+              }
+            }
+          });
+        }
       }
-    });
+    }
   }
 }
 function registrandoPacoteDeViagem() {
-  let titular = prompt("Nome do Titular:");
+  var titular = prompt("Nome do Titular:");
   clientes.forEach((item) => {
-    if (titular == item.Nome) {
-      passagens.forEach((array) => {
-        if (titular == array.Passageiro) {
-          let passagem = array;
-          valorTotal = array.CalcularValor();
-          const novoPacote = new PacoteViagem(titular, passagem, valorTotal);
-          pacotes.push(novoPacote);
-          array.ExibirResumo(valorTotal);
-        } else {
-          alert("Titular não tem nenhuma passagem em seu Nome:");
+    if (titular == item.getNome()) {
+      let loopPacoteDeViagem = true;
+      while (loopPacoteDeViagem) {
+        let choice = Number(
+          prompt(
+            "1-Cadastrar Passagem Ida\n2-Cadastrar Passagem Volta\n3-Finalizar Pacote"
+          )
+        );
+        switch (choice) {
+          case 1:
+            var passagemI = registrarPassagemIda();
+            break;
+          case 2:
+            if (passagensIda.length > 0) {
+              var passagemV = registrarPassagemVolta();
+            } else {
+              alert("Cadastrar uma Passagem de Ida Primeiro");
+            }
+            break;
+          case 3:
+            if (passagensIda.length > 0) {
+              if (passagensVolta.length > 0) {
+                let newPacote = new PacoteViagem(
+                  titular,
+                  passagemI,
+                  passagemV,
+                  0
+                );
+                pacotes.push(newPacote);
+                loopPacoteDeViagem = false;
+              } else {
+                alert("Cadastrar uma Passagem de Volta Primeiro");
+              }
+            } else {
+              alert("Cadastrar uma Passagem de Ida Primeiro");
+            }
+            break;
+          default:
+            alert("Opção Invalida");
+            break;
         }
-      });
-    } else {
-      alert("Nome do Titular Invalido");
+      }
     }
   });
 }
