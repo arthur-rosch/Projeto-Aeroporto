@@ -285,6 +285,7 @@ function registrarPassagemIda() {
 
       clientes.forEach((item) => {
         if (item.getNome() == passageiro) {
+          passageiro = item;
           if (primeiraClasse == 1) {
             primeiraClasse = true;
           } else {
@@ -370,6 +371,7 @@ function registrandoPacoteDeViagem() {
   var titular = prompt("Nome do Titular:");
   clientes.forEach((item) => {
     if (titular == item.getNome()) {
+      titular = item;
       let loopPacoteDeViagem = true;
       while (loopPacoteDeViagem) {
         let choice = Number(
